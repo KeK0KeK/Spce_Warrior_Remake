@@ -18,107 +18,175 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.TimeUtils;
 
 public class Drop extends ApplicationAdapter {
-	private Texture dropImage;
-	private Texture bucketImage;
-	private Sound dropSound;
-	private Music rainMusic;
+	private Texture projectileExplosion0;
+	private Texture projectileExplosion1;
+	private Texture projectileExplosion2;
+	private Texture projectileExplosion3;
+	private Texture projectileExplosion4;
+	private Texture projectileExplosion5;
+	private Texture projectileExplosion6;
+	private Texture blackTexture;
+	private Texture shipFragments0;
+	private Texture shipFragments1;
+	private Texture shipFragments2;
+	private Texture shipFragments3;
+	private Texture shipFragments4;
+	private Texture shipFragments5;
+	private Texture shipFragments6;
+	private Texture shipFragments7;
+	private Texture gunImage;
+	private Texture healthupImage;
+	private Texture miniMobImage0;
+	private Texture mobImage0;
+	private Texture bigMobImage0;
+	private Texture miniMobImage1;
+	private Texture mobImage1;
+	private Texture bigMobImage1;
+	private Texture miniMobImage2;
+	private Texture mobImage2;
+	private Texture bigMobImage2;
+	private Texture playerSpaceshipImage;
+	private Texture skyImage;
+
+	private Sound explosionSound;
+	private Sound killMobSound0;
+	private Sound killMobSound1;
+	private Sound laserSound;
+	private Sound lossOfLifeSound;
+	private Sound powerUpSound;
+
+	private Music gameMusic;
 	private SpriteBatch batch;
 	private OrthographicCamera camera;
-	private Rectangle bucket;
-	private Array<Rectangle> raindrops;
+
+	private Rectangle ship;
+	private Array<Rectangle> mobDrops;
 	private long lastDropTime;
 
 	@Override
 	public void create() {
-		// load the images for the droplet and the bucket, 64x64 pixels each
-		dropImage = new Texture(Gdx.files.internal("droplet.png"));
-		bucketImage = new Texture(Gdx.files.internal("bucket.png"));
+		// загрузите изображения для дроплета и ведра размером 64x64 пикселя каждое
+		projectileExplosion0 = new Texture(Gdx.files.internal("ex0.png"));
+		projectileExplosion1 = new Texture(Gdx.files.internal("ex1.png"));
+		projectileExplosion2 = new Texture(Gdx.files.internal("ex2.png"));
+		projectileExplosion3 = new Texture(Gdx.files.internal("ex3.png"));
+		projectileExplosion4 = new Texture(Gdx.files.internal("ex4.png"));
+		projectileExplosion5 = new Texture(Gdx.files.internal("ex5.png"));
+		projectileExplosion6 = new Texture(Gdx.files.internal("ex6.png"));
+		blackTexture = new Texture(Gdx.files.internal("ex7.png"));
+		shipFragments0 = new Texture(Gdx.files.internal("expl0.png"));
+		shipFragments1 = new Texture(Gdx.files.internal("expl1.png"));
+		shipFragments2 = new Texture(Gdx.files.internal("expl2.png"));
+		shipFragments3 = new Texture(Gdx.files.internal("expl3.png"));
+		shipFragments4 = new Texture(Gdx.files.internal("expl4.png"));
+		shipFragments5 = new Texture(Gdx.files.internal("expl5.png"));
+		shipFragments6 = new Texture(Gdx.files.internal("expl6.png"));
+		shipFragments7 = new Texture(Gdx.files.internal("expl7.png"));
+		gunImage = new Texture(Gdx.files.internal("gun.png"));
+		healthupImage = new Texture(Gdx.files.internal("healthup.png"));
+		miniMobImage0 = new Texture(Gdx.files.internal("mob1 small.png"));
+		mobImage0 = new Texture(Gdx.files.internal("mob1.png"));
+		bigMobImage0 = new Texture(Gdx.files.internal("mob1 big.png"));
+		miniMobImage1 = new Texture(Gdx.files.internal("mob2 small.png"));
+		mobImage1 = new Texture(Gdx.files.internal("mob2.png"));
+		bigMobImage1 = new Texture(Gdx.files.internal("mob2 big.png"));
+		miniMobImage2 = new Texture(Gdx.files.internal("mob3 small.png"));
+		mobImage2 = new Texture(Gdx.files.internal("mob3.png"));
+		bigMobImage2 = new Texture(Gdx.files.internal("mob3 big.png"));
+		playerSpaceshipImage = new Texture(Gdx.files.internal("player spaceship0.png"));
+		skyImage = new Texture(Gdx.files.internal("sky.png"));
 
-		// load the drop sound effect and the rain background "music"
-		dropSound = Gdx.audio.newSound(Gdx.files.internal("drop.wav"));
-		rainMusic = Gdx.audio.newMusic(Gdx.files.internal("rain.mp3"));
+		// загрузите звуковой эффект капли и фоновую "music" дождя
+		explosionSound = Gdx.audio.newSound(Gdx.files.internal("explosion.ogg"));
+		killMobSound0 = Gdx.audio.newSound(Gdx.files.internal("kill mob 1.wav"));
+		killMobSound1 = Gdx.audio.newSound(Gdx.files.internal("kill mob 1.wav"));
+		//laserSound = Gdx.audio.newSound(Gdx.files.internal("laser.wav"));
+		lossOfLifeSound = Gdx.audio.newSound(Gdx.files.internal("loss of life.mp3"));
+		powerUpSound = Gdx.audio.newSound(Gdx.files.internal("powerup.wav"));
 
-		// start the playback of the background music immediately
-		rainMusic.setLooping(true);
-		rainMusic.play();
+		gameMusic = Gdx.audio.newMusic(Gdx.files.internal("theme.mp3"));
 
-		// create the camera and the SpriteBatch
+		// немедленно начать воспроизведение фоновой музыки
+		gameMusic.setLooping(true);
+		gameMusic.play();
+
+		// создайте камеру и SpriteBatch
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false, 800, 480);
 		batch = new SpriteBatch();
 
-		// create a Rectangle to logically represent the bucket
-		bucket = new Rectangle();
-		bucket.x = 800 / 2 - 64 / 2; // center the bucket horizontally
-		bucket.y = 20; // bottom left corner of the bucket is 20 pixels above the bottom screen edge
-		bucket.width = 64;
-		bucket.height = 64;
+		// создайте прямоугольник для логического представления ведра
+		ship = new Rectangle();
+		ship.x = 800 / 2 - 64 / 2; // центрировать ковш по горизонтали
+		ship.y = 20; // нижний левый угол ведра на 20 пикселей выше нижнего края экрана
+		ship.width = 64;
+		ship.height = 64;
 
-		// create the raindrops array and spawn the first raindrop
-		raindrops = new Array<Rectangle>();
-		spawnRaindrop();
+		// создайте массив капель дождя и создайте первую каплю дождя
+		mobDrops = new Array<Rectangle>();
+		spawnMobDrop();
 	}
 
-	private void spawnRaindrop() {
-		Rectangle raindrop = new Rectangle();
-		raindrop.x = MathUtils.random(0, 800-64);
-		raindrop.y = 480;
-		raindrop.width = 64;
-		raindrop.height = 64;
-		raindrops.add(raindrop);
+	private void spawnMobDrop() {
+		Rectangle mobDrop = new Rectangle();
+		mobDrop.x = MathUtils.random(0, 800-64);
+		mobDrop.y = 480;
+		mobDrop.width = 64;
+		mobDrop.height = 64;
+		mobDrops.add(mobDrop);
 		lastDropTime = TimeUtils.nanoTime();
 	}
 
 	@Override
 	public void render() {
-		// clear the screen with a dark blue color. The
-		// arguments to clear are the red, green
-		// blue and alpha component in the range [0,1]
-		// of the color to be used to clear the screen.
+		// очищаем экран темно-синим цветом.
+		// аргументы для очистки: красный, зеленый
+		// синяя и альфа-компонента в диапазоне [0,1]
+		// цвета, который будет использоваться для очистки экрана.
 		ScreenUtils.clear(0, 0, 0.2f, 1);
 
-		// tell the camera to update its matrices.
+		// скажите камере обновить свои матрицы.
 		camera.update();
 
-		// tell the SpriteBatch to render in the
-		// coordinate system specified by the camera.
+		// приказываем SpriteBatch рендерить в
+		// системе координат, заданная камерой.
 		batch.setProjectionMatrix(camera.combined);
 
-		// begin a new batch and draw the bucket and
-		// all drops
+		// начинаем новую партию и рисуем ведро и
+		// все капли
 		batch.begin();
-		batch.draw(bucketImage, bucket.x, bucket.y);
-		for(Rectangle raindrop: raindrops) {
-			batch.draw(dropImage, raindrop.x, raindrop.y);
+		batch.draw(playerSpaceshipImage, ship.x, ship.y);
+		for(Rectangle mobDrop: mobDrops) {
+			batch.draw(mobImage0, mobDrop.x, mobDrop.y);
 		}
 		batch.end();
 
-		// process user input
+		// обрабатывать пользовательский ввод
 		if(Gdx.input.isTouched()) {
 			Vector3 touchPos = new Vector3();
 			touchPos.set(Gdx.input.getX(), Gdx.input.getY(), 0);
 			camera.unproject(touchPos);
-			bucket.x = touchPos.x - 64 / 2;
+			ship.x = touchPos.x - 64 / 2;
 		}
-		if(Gdx.input.isKeyPressed(Keys.LEFT)) bucket.x -= 200 * Gdx.graphics.getDeltaTime();
-		if(Gdx.input.isKeyPressed(Keys.RIGHT)) bucket.x += 200 * Gdx.graphics.getDeltaTime();
+		if(Gdx.input.isKeyPressed(Keys.LEFT)) ship.x -= 200 * Gdx.graphics.getDeltaTime();
+		if(Gdx.input.isKeyPressed(Keys.RIGHT)) ship.x += 200 * Gdx.graphics.getDeltaTime();
 
-		// make sure the bucket stays within the screen bounds
-		if(bucket.x < 0) bucket.x = 0;
-		if(bucket.x > 800 - 64) bucket.x = 800 - 64;
+		// убедитесь, что ведро остается в пределах экрана
+		if(ship.x < 0) ship.x = 0;
+		if(ship.x > 800 - 64) ship.x = 800 - 64;
 
-		// check if we need to create a new raindrop
-		if(TimeUtils.nanoTime() - lastDropTime > 1000000000) spawnRaindrop();
+		// проверьте, нужно ли нам создать новую каплю дождя
+		if(TimeUtils.nanoTime() - lastDropTime > 1000000000) spawnMobDrop();
 
-		// move the raindrops, remove any that are beneath the bottom edge of
-		// the screen or that hit the bucket. In the latter case we play back
-		// a sound effect as well.
-		for (Iterator<Rectangle> iter = raindrops.iterator(); iter.hasNext(); ) {
+		// переместите капли дождя, удалите те, которые находятся под нижним краем
+		// экран или что попало в ведро. В последнем случае мы воспроизводим
+		// звуковой эффект, а также.
+		for (Iterator<Rectangle> iter = mobDrops.iterator(); iter.hasNext(); ) {
 			Rectangle raindrop = iter.next();
 			raindrop.y -= 200 * Gdx.graphics.getDeltaTime();
 			if(raindrop.y + 64 < 0) iter.remove();
-			if(raindrop.overlaps(bucket)) {
-				dropSound.play();
+			if(raindrop.overlaps(ship)) {
+				explosionSound.play();
 				iter.remove();
 			}
 		}
@@ -126,11 +194,11 @@ public class Drop extends ApplicationAdapter {
 
 	@Override
 	public void dispose() {
-		// dispose of all the native resources
-		dropImage.dispose();
-		bucketImage.dispose();
-		dropSound.dispose();
-		rainMusic.dispose();
+		// распоряжаться всеми родными ресурсами | спасибо переводчику
+		mobImage0.dispose();
+		playerSpaceshipImage.dispose();
+		explosionSound.dispose();
+		gameMusic.dispose();
 		batch.dispose();
 	}
 }

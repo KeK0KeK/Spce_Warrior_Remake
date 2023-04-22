@@ -31,13 +31,7 @@
               <path>
                 <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
                 <item name="Space_Warrior" type="f1a62948:ProjectNode" />
-                <item name="Tasks" type="e4a08cd1:TasksNode" />
-              </path>
-              <path>
-                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="Space_Warrior" type="f1a62948:ProjectNode" />
-                <item name="Tasks" type="e4a08cd1:TasksNode" />
-                <item name="other" type="c8890929:TasksNode$1" />
+                <item name="Run Configurations" type="7b0102dc:RunConfigurationsNode" />
               </path>
             </expand>
             <select />
@@ -110,6 +104,12 @@
       <workItem from="1681924835216" duration="14000" />
       <workItem from="1681924933166" duration="125000" />
       <workItem from="1681925134069" duration="5485000" />
+      <workItem from="1681932963856" duration="85000" />
+      <workItem from="1681933152782" duration="72000" />
+      <workItem from="1681933246029" duration="531000" />
+      <workItem from="1682068551254" duration="874000" />
+      <workItem from="1682069524925" duration="491000" />
+      <workItem from="1682085716024" duration="4000" />
     </task>
     <servers />
   </component>

@@ -65,7 +65,7 @@ public class Drop extends ApplicationAdapter {
 
 	@Override
 	public void create() {
-		// загрузите изображения для дроплета и ведра размером 64x64 пикселя каждое
+		// загружены изображения врагов, эффектов, корабля, бэкграунда
 		projectileExplosion0 = new Texture(Gdx.files.internal("ex0.png"));
 		projectileExplosion1 = new Texture(Gdx.files.internal("ex1.png"));
 		projectileExplosion2 = new Texture(Gdx.files.internal("ex2.png"));
@@ -96,7 +96,7 @@ public class Drop extends ApplicationAdapter {
 		playerSpaceshipImage = new Texture(Gdx.files.internal("player spaceship0.png"));
 		skyImage = new Texture(Gdx.files.internal("sky.png"));
 
-		// загрузите звуковой эффект капли и фоновую "music" дождя
+		// загружены звуковые эффекты взрывов, убийств и всякого такого
 		explosionSound = Gdx.audio.newSound(Gdx.files.internal("explosion.ogg"));
 		killMobSound0 = Gdx.audio.newSound(Gdx.files.internal("kill mob 1.wav"));
 		killMobSound1 = Gdx.audio.newSound(Gdx.files.internal("kill mob 1.wav"));
@@ -104,13 +104,14 @@ public class Drop extends ApplicationAdapter {
 		lossOfLifeSound = Gdx.audio.newSound(Gdx.files.internal("loss of life.mp3"));
 		powerUpSound = Gdx.audio.newSound(Gdx.files.internal("powerup.wav"));
 
+		// загружена фоновая музыка
 		gameMusic = Gdx.audio.newMusic(Gdx.files.internal("theme.mp3"));
 
 		// немедленно начать воспроизведение фоновой музыки
 		gameMusic.setLooping(true);
 		gameMusic.play();
 
-		// создайте камеру и SpriteBatch
+		// создайте камеру и SpriteBatch (пока хз что это)
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false, 800, 480);
 		batch = new SpriteBatch();
@@ -122,7 +123,7 @@ public class Drop extends ApplicationAdapter {
 		ship.width = 64;
 		ship.height = 64;
 
-		// создайте массив капель дождя и создайте первую каплю дождя
+		// создаём массив мобов и создаём первого моба
 		mobDrops = new Array<Rectangle>();
 		spawnMobDrop();
 	}
@@ -145,15 +146,15 @@ public class Drop extends ApplicationAdapter {
 		// цвета, который будет использоваться для очистки экрана.
 		ScreenUtils.clear(0, 0, 0.2f, 1);
 
-		// скажите камере обновить свои матрицы.
+		// обновляем матрицы камеры
 		camera.update();
 
 		// приказываем SpriteBatch рендерить в
-		// системе координат, заданная камерой.
+		// системе координат, заданной камерой.
 		batch.setProjectionMatrix(camera.combined);
 
-		// начинаем новую партию и рисуем ведро и
-		// все капли
+		// начинаем новую партию и рисуем корабль и
+		// всех мобов
 		batch.begin();
 		batch.draw(playerSpaceshipImage, ship.x, ship.y);
 		for(Rectangle mobDrop: mobDrops) {
@@ -171,16 +172,16 @@ public class Drop extends ApplicationAdapter {
 		if(Gdx.input.isKeyPressed(Keys.LEFT)) ship.x -= 200 * Gdx.graphics.getDeltaTime();
 		if(Gdx.input.isKeyPressed(Keys.RIGHT)) ship.x += 200 * Gdx.graphics.getDeltaTime();
 
-		// убедитесь, что ведро остается в пределах экрана
+		// убедимся, что корабль остается в пределах экрана
 		if(ship.x < 0) ship.x = 0;
 		if(ship.x > 800 - 64) ship.x = 800 - 64;
 
-		// проверьте, нужно ли нам создать новую каплю дождя
+		// проверим, нужно ли нам создать нового моба
 		if(TimeUtils.nanoTime() - lastDropTime > 1000000000) spawnMobDrop();
 
-		// переместите капли дождя, удалите те, которые находятся под нижним краем
-		// экран или что попало в ведро. В последнем случае мы воспроизводим
-		// звуковой эффект, а также.
+		// Перемещение мобов. Удаляем мобов, которые находятся под нижним краем
+		// экрана или попавших своим хитбоксом в хитбокс корабля.
+		// В последнем случае мы воспроизводим звуковой эффект.
 		for (Iterator<Rectangle> iter = mobDrops.iterator(); iter.hasNext(); ) {
 			Rectangle raindrop = iter.next();
 			raindrop.y -= 200 * Gdx.graphics.getDeltaTime();
@@ -194,7 +195,7 @@ public class Drop extends ApplicationAdapter {
 
 	@Override
 	public void dispose() {
-		// распоряжаться всеми родными ресурсами | спасибо переводчику
+		// Распоряжение всеми родными ресурсами | спасибо переводчику (хз что означает)
 		mobImage0.dispose();
 		playerSpaceshipImage.dispose();
 		explosionSound.dispose();

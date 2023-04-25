@@ -10,6 +10,7 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
@@ -34,7 +35,7 @@ public class Drop extends ApplicationAdapter {
 	private Texture shipFragments5;
 	private Texture shipFragments6;
 	private Texture shipFragments7;
-	private Texture gunImage;
+	private Texture bulletImage;
 	private Texture healthupImage;
 	private Texture miniMobImage0;
 	private Texture mobImage0;
@@ -60,6 +61,7 @@ public class Drop extends ApplicationAdapter {
 	private OrthographicCamera camera;
 
 	private Rectangle ship;
+	private Array<Rectangle> laserBulletDrops;
 	private Array<Rectangle> mobDrops;
 	private long lastDropTime;
 
@@ -82,7 +84,7 @@ public class Drop extends ApplicationAdapter {
 		shipFragments5 = new Texture(Gdx.files.internal("expl5.png"));
 		shipFragments6 = new Texture(Gdx.files.internal("expl6.png"));
 		shipFragments7 = new Texture(Gdx.files.internal("expl7.png"));
-		gunImage = new Texture(Gdx.files.internal("gun.png"));
+		bulletImage = new Texture(Gdx.files.internal("bullet.png"));
 		healthupImage = new Texture(Gdx.files.internal("healthup.png"));
 		miniMobImage0 = new Texture(Gdx.files.internal("mob1 small.png"));
 		mobImage0 = new Texture(Gdx.files.internal("mob1.png"));
@@ -111,39 +113,52 @@ public class Drop extends ApplicationAdapter {
 		gameMusic.setLooping(true);
 		gameMusic.play();
 
-		// создайте камеру и SpriteBatch (пока хз что это)
+		// создайте камеру (игровой экран) и SpriteBatch (класс для отрисовки спрайтов на экране)
 		camera = new OrthographicCamera();
-		camera.setToOrtho(false, 800, 480);
+		camera.setToOrtho(false, 1024, 800);
 		batch = new SpriteBatch();
 
-		// создайте прямоугольник для логического представления ведра
+		// создайте прямоугольник для логического представления корабля
 		ship = new Rectangle();
-		ship.x = 800 / 2 - 64 / 2; // центрировать ковш по горизонтали
-		ship.y = 20; // нижний левый угол ведра на 20 пикселей выше нижнего края экрана
+		ship.x = 1024 / 2 - 64 / 2; // центрировать корабль по горизонтали
+		ship.y = 20; // нижний левый угол корабля на 20 пикселей выше нижнего края экрана
 		ship.width = 64;
 		ship.height = 64;
+
+		//Создаём прямоугольник для логического представления пули
 
 		// создаём массив мобов и создаём первого моба
 		mobDrops = new Array<Rectangle>();
 		spawnMobDrop();
+
+		// создаём массив пуль и создаём первую пулю
+		laserBulletDrops = new Array<Rectangle>();
+		spawnLaserBulletDrop();
 	}
 
 	private void spawnMobDrop() {
 		Rectangle mobDrop = new Rectangle();
-		mobDrop.x = MathUtils.random(0, 800-64);
-		mobDrop.y = 480;
+		mobDrop.x = MathUtils.random(0, 1024-64);
+		mobDrop.y = 800;
 		mobDrop.width = 64;
 		mobDrop.height = 64;
 		mobDrops.add(mobDrop);
 		lastDropTime = TimeUtils.nanoTime();
 	}
 
+	private void spawnLaserBulletDrop() {
+		Rectangle laserBulletDrop = new Rectangle();
+		laserBulletDrop.x = ship.x + 20;
+		laserBulletDrop.y = ship.y + 50;
+		laserBulletDrop.width = 2;
+		laserBulletDrop.height = 12;
+		laserBulletDrops.add(laserBulletDrop);
+		lastDropTime = TimeUtils.nanoTime();
+	}
+
 	@Override
 	public void render() {
-		// очищаем экран темно-синим цветом.
-		// аргументы для очистки: красный, зеленый
-		// синяя и альфа-компонента в диапазоне [0,1]
-		// цвета, который будет использоваться для очистки экрана.
+		// очистка экрана неким цветом
 		ScreenUtils.clear(0, 0, 0.2f, 1);
 
 		// обновляем матрицы камеры
@@ -156,9 +171,13 @@ public class Drop extends ApplicationAdapter {
 		// начинаем новую партию и рисуем корабль и
 		// всех мобов
 		batch.begin();
+		batch.draw(skyImage, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		batch.draw(playerSpaceshipImage, ship.x, ship.y);
 		for(Rectangle mobDrop: mobDrops) {
 			batch.draw(mobImage0, mobDrop.x, mobDrop.y);
+		}
+		for(Rectangle laserBulletDrop: laserBulletDrops) {
+			batch.draw(bulletImage, laserBulletDrop.x, laserBulletDrop.y);
 		}
 		batch.end();
 
@@ -169,27 +188,39 @@ public class Drop extends ApplicationAdapter {
 			camera.unproject(touchPos);
 			ship.x = touchPos.x - 64 / 2;
 		}
-		if(Gdx.input.isKeyPressed(Keys.LEFT)) ship.x -= 200 * Gdx.graphics.getDeltaTime();
-		if(Gdx.input.isKeyPressed(Keys.RIGHT)) ship.x += 200 * Gdx.graphics.getDeltaTime();
+		if(Gdx.input.isKeyPressed(Keys.SPACE)) spawnLaserBulletDrop();
+		if(Gdx.input.isKeyPressed(Keys.LEFT)) ship.x -= 1000 * Gdx.graphics.getDeltaTime();
+		if(Gdx.input.isKeyPressed(Keys.RIGHT)) ship.x += 1000 * Gdx.graphics.getDeltaTime();
 
 		// убедимся, что корабль остается в пределах экрана
 		if(ship.x < 0) ship.x = 0;
-		if(ship.x > 800 - 64) ship.x = 800 - 64;
+		if(ship.x > 1024 - 64) ship.x = 1024 - 64;
 
 		// проверим, нужно ли нам создать нового моба
 		if(TimeUtils.nanoTime() - lastDropTime > 1000000000) spawnMobDrop();
+		if(TimeUtils.nanoTime() - lastDropTime > 1000000000) spawnLaserBulletDrop();
 
 		// Перемещение мобов. Удаляем мобов, которые находятся под нижним краем
 		// экрана или попавших своим хитбоксом в хитбокс корабля.
 		// В последнем случае мы воспроизводим звуковой эффект.
 		for (Iterator<Rectangle> iter = mobDrops.iterator(); iter.hasNext(); ) {
-			Rectangle raindrop = iter.next();
-			raindrop.y -= 200 * Gdx.graphics.getDeltaTime();
-			if(raindrop.y + 64 < 0) iter.remove();
-			if(raindrop.overlaps(ship)) {
+			Rectangle mobDrop = iter.next();
+			mobDrop.y -= 200 * Gdx.graphics.getDeltaTime();
+			if(mobDrop.y + 64 < 0) iter.remove();
+			if(mobDrop.overlaps(ship)) {
 				explosionSound.play();
 				iter.remove();
 			}
+		}
+
+		for (Iterator<Rectangle> iter = laserBulletDrops.iterator(); iter.hasNext(); ) {
+			Rectangle laserBulletDrop = iter.next();
+			laserBulletDrop.y +=200 * Gdx.graphics.getDeltaTime();
+			if (laserBulletDrop.y + 64 < 0) iter.remove();
+			//if (laserBulletDrop.overlaps(ship)) {
+			//	explosionSound.play();
+			//	iter.remove();
+			//}
 		}
 	}
 

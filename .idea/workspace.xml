@@ -40,6 +40,13 @@
       </state>
     </system>
   </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
@@ -53,7 +60,7 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "C:/Users/nikit/IdeaProjects/Spce_Warrior_Remake-main",
+    "last_opened_file_path": "C:/Users/nikit/IdeaProjects/Project1",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -112,6 +119,11 @@
       <workItem from="1682085716024" duration="4000" />
       <workItem from="1682145374045" duration="24000" />
       <workItem from="1682418110459" duration="7924000" />
+      <workItem from="1685355931625" duration="2590000" />
+      <workItem from="1685358539547" duration="12244000" />
+      <workItem from="1685371651585" duration="9296000" />
+      <workItem from="1685613649488" duration="2148000" />
+      <workItem from="1685615894964" duration="19920000" />
     </task>
     <servers />
   </component>

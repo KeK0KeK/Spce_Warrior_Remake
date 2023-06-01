@@ -8,6 +8,7 @@ import com.badlogic.drop.Drop;
 public class DesktopLauncher {
 	public static void main (String[] arg) {
 		Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
+		config.setWindowedMode(600, 800);
 		config.setForegroundFPS(60);
 		config.setTitle("drop");
 		new Lwjgl3Application(new Drop(), config);

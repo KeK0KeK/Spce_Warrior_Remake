@@ -6,18 +6,22 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
-public class Ship {
+public class Ship{
     public Vector2 position;
     public Vector2 positionBullet;
     public Sprite sprite;
     public Sprite spriteBullet;
     public float speed = 300;
     public float speedBullet = 1000;
-    public Ship(Texture playerSpaceshipImage, Texture bulletImage, Color color)
+
+    public Ship(TextureRegion shipRegion, Texture bulletImage, Color color)
     {
-        sprite = new Sprite(playerSpaceshipImage);
+        sprite = new Sprite(shipRegion);
         spriteBullet = new Sprite(bulletImage);
         spriteBullet.setScale(1);
         spriteBullet.setColor(color);

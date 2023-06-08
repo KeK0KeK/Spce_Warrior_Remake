@@ -385,8 +385,6 @@ public class GameScreen implements Screen, InputProcessor {
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
         if ((height - screenY) / ppuY >= 750 && (height - screenY) / ppuY <= 796 && screenX / ppuX >= 560 && screenX / ppuX <= 596) {
             isPaused = !isPaused;
-            //временное решение для проверки работоспособности переносов
-            //в последствии используются в других местах
             score += 10;
             lives -= 1;
             coin += 5;

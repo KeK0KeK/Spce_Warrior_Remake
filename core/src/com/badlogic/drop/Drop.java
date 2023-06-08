@@ -47,10 +47,11 @@ public class Drop extends ApplicationAdapter {
 	private Music gameMusic;
 	Ship ship;
 	Alien alien;
+	Rectangle shipSkin;
 	SpriteBatch batch;
 	public TextureRegion shipRegion;
 
-	private Array<Alien> aliens;
+	private Alien[] aliens;
 	TextureRegion[] alienTextures = new TextureRegion[9];
 	private long lastDropTime;
 
@@ -106,19 +107,17 @@ public class Drop extends ApplicationAdapter {
 		gameMusic.play();
 		ship = new Ship(shipRegion, bulletImage, Color.WHITE);
 
-		aliens = new Array<Alien>();
-		spawnAlienDrop();
-	}
-
-	private void spawnAlienDrop()
-	{
-		if (aliens.size < 10) {
+		//aliens = new Array<Alien>();
+		//spawnAlienDrop();
+		for (int i = 0; i< aliens.length;i++)
+		{
 			Alien alien = new Alien(alienTextures[(int)(Math.random()* alienTextures.length)].getTexture(), Color.WHITE, MathUtils.random(0, 8));
 			alien.position.x = MathUtils.random(30, 570);
 			alien.position.y = 800;
-			aliens.add(alien);
+			aliens[i] = alien;
 			lastDropTime = TimeUtils.nanoTime();
 		}
+
 	}
 
 	@Override
@@ -134,42 +133,66 @@ public class Drop extends ApplicationAdapter {
 			sprite.setPosition(alien.position.x, alien.position.y);
 			sprite.draw(batch);
 		}
-		for(Iterator<Alien> iter = aliens.iterator(); iter.hasNext();)
+//		for(Iterator<Alien> iter = aliens.iterator(); iter.hasNext();)
+//		{
+//			Alien alien = iter.next();
+//			if (alien.ID == 1 || alien.ID == 4|| alien.ID == 7) alien.position.y -= 200 *Gdx.graphics.getDeltaTime();
+//			if (alien.ID == 2 || alien.ID == 5|| alien.ID == 8)
+//			{
+//				alien.position.x -= 200 *Gdx.graphics.getDeltaTime();
+//				alien.position.y -= 200 *Gdx.graphics.getDeltaTime();
+//			}
+//			if (alien.ID == 3 || alien.ID == 6|| alien.ID == 9)
+//			{
+//				alien.position.x += 200 *Gdx.graphics.getDeltaTime();
+//				alien.position.y -= 200 *Gdx.graphics.getDeltaTime();
+//			}
+//			if(alien.position.y < -40) iter.remove();
+//			if(alien.position.x < -600) iter.remove();
+//			if(alien.position.x > 600) iter.remove();
+//			if(alien.Alive)
+//			{
+//				if(Intersector.overlaps(ship.sprite.getBoundingRectangle(), alien.sprite.getBoundingRectangle()))
+//				{
+//					explosionSound.play();
+//					iter.remove();
+//					Gdx.app.exit();
+//				}
+//				if(alien.sprite.getBoundingRectangle().overlaps(ship.spriteBullet.getBoundingRectangle()))
+//				{
+//					ship.positionBullet.y = 10000;
+//					alien.Alive = false;
+//					killMobSound0.play();
+//					iter.remove();
+//				}
+//			}
+//		}
+		for (int i =0; i < aliens.length; i++)
 		{
-			Alien alien = iter.next();
-			if (alien.ID == 1 || alien.ID == 4|| alien.ID == 7) alien.position.y -= 200 *Gdx.graphics.getDeltaTime();
-			if (alien.ID == 2 || alien.ID == 5|| alien.ID == 8)
+			if(aliens[i].Alive)
 			{
-				alien.position.x -= 200 *Gdx.graphics.getDeltaTime();
-				alien.position.y -= 200 *Gdx.graphics.getDeltaTime();
-			}
-			if (alien.ID == 3 || alien.ID == 6|| alien.ID == 9)
-			{
-				alien.position.x += 200 *Gdx.graphics.getDeltaTime();
-     			alien.position.y -= 200 *Gdx.graphics.getDeltaTime();
-			}
-			if(alien.position.y < -40) iter.remove();
-			if(alien.position.x < -600) iter.remove();
-			if(alien.position.x > 600) iter.remove();
-			if(alien.Alive)
-			{
-				if(Intersector.overlaps(ship.sprite.getBoundingRectangle(), alien.sprite.getBoundingRectangle()))
+				if (aliens[i].ID == 1 || aliens[i].ID == 4|| aliens[i].ID == 7) aliens[i].position.y -= 200 *Gdx.graphics.getDeltaTime();
+				if (aliens[i].ID == 2 || aliens[i].ID == 5|| aliens[i].ID == 8)
 				{
-					explosionSound.play();
-					iter.remove();
-					Gdx.app.exit();
+					aliens[i].position.x -= 200 *Gdx.graphics.getDeltaTime();
+					aliens[i].position.y -= 200 *Gdx.graphics.getDeltaTime();
 				}
-				if(alien.sprite.getBoundingRectangle().overlaps(ship.spriteBullet.getBoundingRectangle()))
+				if (aliens[i].ID == 3 || aliens[i].ID == 6|| aliens[i].ID == 9)
+				{
+					aliens[i].position.x += 200 *Gdx.graphics.getDeltaTime();
+					aliens[i].position.y -= 200 *Gdx.graphics.getDeltaTime();
+				}
+				if(ship.spriteBullet.getBoundingRectangle().overlaps(aliens[i].sprite.getBoundingRectangle()))
 				{
 					ship.positionBullet.y = 10000;
-					alien.Alive = false;
+					aliens[i].Alive = false;
 					killMobSound0.play();
-					iter.remove();
+					//iter.remove();
 				}
 			}
 		}
 		batch.end();
-		if(TimeUtils.nanoTime() - lastDropTime > 10000000) spawnAlienDrop();
+		//if(TimeUtils.nanoTime() - lastDropTime > 10000000) spawnAlienDrop();
 	}
 
 	@Override

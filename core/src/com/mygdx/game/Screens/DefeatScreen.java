@@ -11,8 +11,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.game.MainGame;
 
-import java.util.Scanner;
-
 public class DefeatScreen implements Screen, InputProcessor {
     private Texture bg, exitMenuBtn, exitMenuBtnDown, saveBtn, saveBtnDown;
     private Music buttonSound;
@@ -30,165 +28,17 @@ public class DefeatScreen implements Screen, InputProcessor {
         this.mainGame = mainGame;
     }
 
-    //геттеры и сеттеры
-    public Texture getBg() {
-        return bg;
-    }
-
-    public void setBg(Texture bg) {
-        this.bg = bg;
-    }
-
-    public Texture getExitMenuBtn() {
-        return exitMenuBtn;
-    }
-
-    public void setExitMenuBtn(Texture exitMenuBtn) {
-        this.exitMenuBtn = exitMenuBtn;
-    }
-
-    public Texture getExitMenuBtnDown() {
-        return exitMenuBtnDown;
-    }
-
-    public void setExitMenuBtnDown(Texture exitMenuBtnDown) {
-        this.exitMenuBtnDown = exitMenuBtnDown;
-    }
-
-    public Music getButtonSound() {
-        return buttonSound;
-    }
-
-    public void setButtonSound(Music buttonSound) {
-        this.buttonSound = buttonSound;
-    }
-
-    public boolean isExitMenuDown() {
-        return isExitMenuDown;
-    }
-
-    public void setExitMenuDown(boolean exitMenuDown) {
-        isExitMenuDown = exitMenuDown;
-    }
-
-    public Texture getSaveBtn() {
-        return saveBtn;
-    }
-
-    public void setSaveBtn(Texture saveBtn) {
-        this.saveBtn = saveBtn;
-    }
-
-    public Texture getSaveBtnDown() {
-        return saveBtnDown;
-    }
-
-    public void setSaveBtnDown(Texture saveBtnDown) {
-        this.saveBtnDown = saveBtnDown;
-    }
-
-    public boolean isSaveDown() {
-        return isSaveDown;
-    }
-
-    public void setSaveDown(boolean saveDown) {
-        isSaveDown = saveDown;
-    }
-
-    public MainGame getMainGame() {
-        return mainGame;
-    }
-
-    public OrthographicCamera getCamera() {
-        return camera;
-    }
-
-    public void setCamera(OrthographicCamera camera) {
-        this.camera = camera;
-    }
-
-    public float getCameraWidth() {
-        return cameraWidth;
-    }
-
-    public void setCameraWidth(float cameraWidth) {
-        this.cameraWidth = cameraWidth;
-    }
-
-    public float getCameraHeight() {
-        return cameraHeight;
-    }
-
-    public void setCameraHeight(float cameraHeight) {
-        this.cameraHeight = cameraHeight;
-    }
-
-    public int getWidth() {
-        return width;
-    }
-
-    public void setWidth(int width) {
-        this.width = width;
-    }
-
-    public int getHeight() {
-        return height;
-    }
-
-    public void setHeight(int height) {
-        this.height = height;
-    }
-
-    public float getPpuX() {
-        return ppuX;
-    }
-
-    public void setPpuX(float ppuX) {
-        this.ppuX = ppuX;
-    }
-
-    public float getPpuY() {
-        return ppuY;
-    }
-
-    public void setPpuY(float ppuY) {
-        this.ppuY = ppuY;
-    }
-
-    public int getScore() {
-        return score;
-    }
-
+    //сеттеры для получения счета и количества монет
     public void setScore(int score) {
         this.score = score;
-    }
-
-    public String getScorePrint() {
-        return scorePrint;
-    }
-
-    public void setScorePrint(String scorePrint) {
-        this.scorePrint = scorePrint;
-    }
-
-    public int getCoin() {
-        return coin;
     }
 
     public void setCoin(int coin) {
         this.coin = coin;
     }
 
-    public String getCoinPrint() {
-        return coinPrint;
-    }
-
-    public void setCoinPrint(String coinPrint) {
-        this.coinPrint = coinPrint;
-    }
-
     //устанавка позиции камеры на сцене
-    public void SetCamera(float x, float y){
+    public void setCamera(float x, float y){
         this.camera.position.set(x, y,0);
         this.camera.update();
     }
@@ -212,7 +62,6 @@ public class DefeatScreen implements Screen, InputProcessor {
 
     //отрисовка счета
     public void drawScore(){
-        score = getScore();
         scorePrint = String.valueOf(score);
         mainGame.font4.draw(mainGame.batch, "you score:", 20, 650);
         mainGame.font4.draw(mainGame.batch, scorePrint, 320, 550);
@@ -271,7 +120,7 @@ public class DefeatScreen implements Screen, InputProcessor {
     public void render(float delta) {
         Gdx.gl.glClearColor(0, 0, 0.2f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        SetCamera(cameraWidth / 2, cameraHeight / 2f);
+        setCamera(cameraWidth / 2, cameraHeight / 2f);
         camera.update();
         mainGame.batch.setProjectionMatrix(camera.combined);
         mainGame.batch.begin();

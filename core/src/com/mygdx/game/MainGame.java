@@ -16,9 +16,7 @@ public class MainGame extends Game{
 	public SpriteBatch batch;
 	public BitmapFont font1, font2, font3, font4, font5, font6, font7;
 
-
-
-
+	//функция для создания шрифтов
 	public void fonts(){
 		FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("font.ttf"));
 		FreeTypeFontGenerator.FreeTypeFontParameter parameter1 = new FreeTypeFontGenerator.FreeTypeFontParameter();
@@ -45,102 +43,6 @@ public class MainGame extends Game{
 		font5.setColor(1, 0.1f, 0.1f, 1);
 		font6.setColor(0.8f, 0.8f, 0.2f, 1);
 		font7.setColor(1, 0.1f, 0.1f, 1);
-	}
-
-	public GameScreen getGameScreen() {
-		return gameScreen;
-	}
-
-	public void setGameScreen(GameScreen gameScreen) {
-		this.gameScreen = gameScreen;
-	}
-
-	public SkinsScreen getSkinsScreen() {
-		return skinsScreen;
-	}
-
-	public void setSkinsScreen(SkinsScreen skinsScreen) {
-		this.skinsScreen = skinsScreen;
-	}
-
-	public DefeatScreen getDefeatScreen() {
-		return defeatScreen;
-	}
-
-	public void setDefeatScreen(DefeatScreen defeatScreen) {
-		this.defeatScreen = defeatScreen;
-	}
-
-	public MainMenuScreen getMainMenuScreen() {
-		return mainMenuScreen;
-	}
-
-	public void setMainMenuScreen(MainMenuScreen mainMenuScreen) {
-		this.mainMenuScreen = mainMenuScreen;
-	}
-
-	public SpriteBatch getBatch() {
-		return batch;
-	}
-
-	public void setBatch(SpriteBatch batch) {
-		this.batch = batch;
-	}
-
-	public BitmapFont getFont1() {
-		return font1;
-	}
-
-	public void setFont1(BitmapFont font1) {
-		this.font1 = font1;
-	}
-
-	public BitmapFont getFont2() {
-		return font2;
-	}
-
-	public void setFont2(BitmapFont font2) {
-		this.font2 = font2;
-	}
-
-	public BitmapFont getFont3() {
-		return font3;
-	}
-
-	public void setFont3(BitmapFont font3) {
-		this.font3 = font3;
-	}
-
-	public BitmapFont getFont4() {
-		return font4;
-	}
-
-	public void setFont4(BitmapFont font4) {
-		this.font4 = font4;
-	}
-
-	public BitmapFont getFont5() {
-		return font5;
-	}
-
-	public void setFont5(BitmapFont font5) {
-		this.font5 = font5;
-	}
-
-	public BitmapFont getFont6() {
-		return font6;
-	}
-
-	public void setFont6(BitmapFont font6) {
-		this.font6 = font6;
-	}
-
-	public BitmapFont getFont7() {
-		return font7;
-	}
-
-	public void setFont7(BitmapFont font7) {
-		this.font7 = font7;
 	}
 
 	@Override

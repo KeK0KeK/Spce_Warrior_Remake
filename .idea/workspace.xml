@@ -4,7 +4,35 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4210e46a-b0d0-4d39-90c3-58d0301145bf" name="Changes" comment="" />
+    <list default="true" id="2286b833-39a2-410c-bade-6b14d299587e" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/core/build/classes/java/main/com/mygdx/game/Actors/Actor.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/build/classes/java/main/com/mygdx/game/Actors/Player.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/build/classes/java/main/com/mygdx/game/GraphicsObjects/GraphicsObjects.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/build/classes/java/main/com/mygdx/game/MainGame.class" beforeDir="false" afterPath="$PROJECT_DIR$/core/build/classes/java/main/com/mygdx/game/MainGame.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/build/classes/java/main/com/mygdx/game/Screens/DefeatScreen.class" beforeDir="false" afterPath="$PROJECT_DIR$/core/build/classes/java/main/com/mygdx/game/Screens/DefeatScreen.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/build/classes/java/main/com/mygdx/game/Screens/GameScreen.class" beforeDir="false" afterPath="$PROJECT_DIR$/core/build/classes/java/main/com/mygdx/game/Screens/GameScreen.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/build/classes/java/main/com/mygdx/game/Screens/MainMenuScreen.class" beforeDir="false" afterPath="$PROJECT_DIR$/core/build/classes/java/main/com/mygdx/game/Screens/MainMenuScreen.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/build/classes/java/main/com/mygdx/game/Screens/MenuScreen.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/build/classes/java/main/com/mygdx/game/Screens/PauseScreen.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/build/classes/java/main/com/mygdx/game/Screens/RecordsScreen.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/build/classes/java/main/com/mygdx/game/Screens/SkinsScreen.class" beforeDir="false" afterPath="$PROJECT_DIR$/core/build/classes/java/main/com/mygdx/game/Screens/SkinsScreen.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/build/classes/java/main/com/mygdx/game/Tools/Circle.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/build/classes/java/main/com/mygdx/game/Tools/Point2D.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/build/libs/core-1.0.jar" beforeDir="false" afterPath="$PROJECT_DIR$/core/build/libs/core-1.0.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/build/tmp/compileJava/previous-compilation-data.bin" beforeDir="false" afterPath="$PROJECT_DIR$/core/build/tmp/compileJava/previous-compilation-data.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/com/mygdx/game/Screens/GameScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/com/mygdx/game/Screens/GameScreen.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/desktop/build/resources/main/badlogic.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/desktop/build/resources/main/bucket.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/desktop/build/resources/main/button_down.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/desktop/build/resources/main/button_up.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/desktop/build/resources/main/drop.wav" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/desktop/build/resources/main/droplet.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/desktop/build/resources/main/hs_err_pid18448.log" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/desktop/build/resources/main/player spaceship0.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/desktop/build/resources/main/rain.mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/desktop/build/resources/main/theme.mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/desktop/build/tmp/compileJava/previous-compilation-data.bin" beforeDir="false" afterPath="$PROJECT_DIR$/desktop/build/tmp/compileJava/previous-compilation-data.bin" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -15,42 +43,13 @@
       <ProjectState />
     </projectState>
   </component>
-  <component name="ExternalProjectsManager">
-    <system id="GRADLE">
-      <state>
-        <task path="$PROJECT_DIR$">
-          <activation />
-        </task>
-        <projects_view>
-          <tree_state>
-            <expand>
-              <path>
-                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="Space_Warrior" type="f1a62948:ProjectNode" />
-              </path>
-              <path>
-                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="Space_Warrior" type="f1a62948:ProjectNode" />
-                <item name="Run Configurations" type="7b0102dc:RunConfigurationsNode" />
-              </path>
-            </expand>
-            <select />
-          </tree_state>
-        </projects_view>
-      </state>
-    </system>
-  </component>
-  <component name="FileTemplateManagerImpl">
-    <option name="RECENT_TEMPLATES">
-      <list>
-        <option value="Class" />
-      </list>
-    </option>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
-  <component name="ProjectId" id="2NmLr9cEjwDEphJbYz0vSbCQrZ6" />
+  <component name="ProjectId" id="2Qw3obJkxpcaguq0Iq3vbl5xAKl" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -60,80 +59,37 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "C:/Users/nikit/IdeaProjects/Space",
+    "last_opened_file_path": "C:/Users/nikit/IdeaProjects/Space_Warrior",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)"
   }
 }]]></component>
-  <component name="RunManager">
-    <configuration name="Space_Warrior [run]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list>
-            <option value="run" />
-          </list>
-        </option>
-        <option name="vmOptions" />
-      </ExternalSystemSettings>
-      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
-      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
-      <DebugAllEnabled>false</DebugAllEnabled>
-      <method v="2" />
-    </configuration>
-    <recent_temporary>
-      <list>
-        <item itemvalue="Gradle.Space_Warrior [run]" />
-      </list>
-    </recent_temporary>
-  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="4210e46a-b0d0-4d39-90c3-58d0301145bf" name="Changes" comment="" />
-      <created>1680264508758</created>
+      <changelist id="2286b833-39a2-410c-bade-6b14d299587e" name="Changes" comment="" />
+      <created>1686250991543</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1680264508758</updated>
-      <workItem from="1680264510326" duration="1065000" />
-      <workItem from="1680552932427" duration="1241000" />
-      <workItem from="1681923179569" duration="1500000" />
-      <workItem from="1681924700321" duration="24000" />
-      <workItem from="1681924818179" duration="5000" />
-      <workItem from="1681924835216" duration="14000" />
-      <workItem from="1681924933166" duration="125000" />
-      <workItem from="1681925134069" duration="5485000" />
-      <workItem from="1681932963856" duration="85000" />
-      <workItem from="1681933152782" duration="72000" />
-      <workItem from="1681933246029" duration="531000" />
-      <workItem from="1682068551254" duration="874000" />
-      <workItem from="1682069524925" duration="491000" />
-      <workItem from="1682085716024" duration="4000" />
-      <workItem from="1682145374045" duration="24000" />
-      <workItem from="1682418110459" duration="7924000" />
-      <workItem from="1685355931625" duration="2590000" />
-      <workItem from="1685358539547" duration="12244000" />
-      <workItem from="1685371651585" duration="9296000" />
-      <workItem from="1685613649488" duration="2148000" />
-      <workItem from="1685615894964" duration="19920000" />
-      <workItem from="1685779522550" duration="660000" />
-      <workItem from="1685873138938" duration="14067000" />
-      <workItem from="1685889658164" duration="743000" />
-      <workItem from="1686225526390" duration="989000" />
-      <workItem from="1686228272911" duration="8412000" />
-      <workItem from="1686238544849" duration="2919000" />
+      <updated>1686250991543</updated>
+      <workItem from="1686250993174" duration="1421000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
 </project>

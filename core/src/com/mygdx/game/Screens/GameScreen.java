@@ -10,7 +10,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.mygdx.game.MainGame;
@@ -19,7 +18,7 @@ import java.util.Iterator;
 
 public class GameScreen implements Screen, InputProcessor {
     private Texture playerTexture, bg, gamePlayerSkin, exitMenuBtn, exitMenuBtnDown,
-            pauseTexture, playTexture, livesTexture, healthup, gun;
+            pauseTexture, playTexture, livesTexture, healthup, mobImage0, bulletImage;
     private Music buttonSound;
     private Sound killMobSound, explosionSound, laserSound, powerup;
     private boolean isExitMenuDown, isPaused;
@@ -35,228 +34,24 @@ public class GameScreen implements Screen, InputProcessor {
     private int lives = 3;
     private int playerSpeed = 400;
     String scorePrint, coinPrint;
-
-    public GameScreen(MainGame mainGame) {
-        this.mainGame = mainGame;
-    }
-
-    //геттеры и сеттеры
-
-    public Texture getPlayerTexture() {
-        return playerTexture;
-    }
-    private Texture miniMobImage0;
-    private Texture mobImage0;
-    private Texture bigMobImage0;
-    private Texture miniMobImage1;
-    private Texture mobImage1;
-    private Texture bigMobImage1;
-    private Texture miniMobImage2;
-    private Texture mobImage2;
-    private Texture bigMobImage2;
-
-    public void setPlayerTexture(Texture playerSkin) {
-        this.playerTexture  = playerSkin;
-    }
-
-    public Texture getLivesTexture() {
-        return livesTexture;
-    }
-
-    public void setLivesTexture(Texture livesTexture) {
-        this.livesTexture = livesTexture;
-    }
-
-    public Texture getBg() {
-        return bg;
-    }
-
-    public void setBg(Texture bg) {
-        this.bg = bg;
-    }
-
-    public Texture getGamePlayerSkin() {
-        return gamePlayerSkin;
-    }
-
-    public void setGamePlayerSkin(Texture gamePlayerSkin) {
-        this.gamePlayerSkin = gamePlayerSkin;
-    }
-
-    public Texture getExitMenuBtn() {
-        return exitMenuBtn;
-    }
-
-    public void setExitMenuBtn(Texture exitMenuBtn) {
-        this.exitMenuBtn = exitMenuBtn;
-    }
-
-    public Texture getExitMenuBtnDown() {
-        return exitMenuBtnDown;
-    }
-
-    public void setExitMenuBtnDown(Texture exitMenuBtnDown) {
-        this.exitMenuBtnDown = exitMenuBtnDown;
-    }
-
-    public Texture getPauseTexture() {
-        return pauseTexture;
-    }
-
-    public void setPauseTexture(Texture pauseTexture) {
-        this.pauseTexture = pauseTexture;
-    }
-
-    public Texture getPlayTexture() {
-        return playTexture;
-    }
-
-    public void setPlayTexture(Texture playTexture) {
-        this.playTexture = playTexture;
-    }
-
-    public Music getButtonSound() {
-        return buttonSound;
-    }
-
-    public void setButtonSound(Music buttonSound) {
-        this.buttonSound = buttonSound;
-    }
-
-    public boolean isExitMenuDown() {
-        return isExitMenuDown;
-    }
-
-    public void setExitMenuDown(boolean exitMenuDown) {
-        isExitMenuDown = exitMenuDown;
-    }
-
-    public boolean isPaused() {
-        return isPaused;
-    }
-
-    public void setPaused(boolean paused) {
-        isPaused = paused;
-    }
-
-    public MainGame getMainGame() {
-        return mainGame;
-    }
-
-    public Rectangle getPlayer() {
-        return player;
-    }
-
-    public void setPlayer(Rectangle player) {
-        this.player = player;
-    }
-
-    public OrthographicCamera getCamera() {
-        return camera;
-    }
-
-    public void setCamera(OrthographicCamera camera) {
-        this.camera = camera;
-    }
-
-    public float getCameraWidth() {
-        return cameraWidth;
-    }
-
-    public void setCameraWidth(float cameraWidth) {
-        this.cameraWidth = cameraWidth;
-    }
-
-    public float getCameraHeight() {
-        return cameraHeight;
-    }
-
-    public void setCameraHeight(float cameraHeight) {
-        this.cameraHeight = cameraHeight;
-    }
-
-    public int getWidth() {
-        return width;
-    }
-
-    public void setWidth(int width) {
-        this.width = width;
-    }
-
-    public int getHeight() {
-        return height;
-    }
-
-    public void setHeight(int height) {
-        this.height = height;
-    }
-
-    public float getPpuX() {
-        return ppuX;
-    }
-
-    public void setPpuX(float ppuX) {
-        this.ppuX = ppuX;
-    }
-
-    public float getPpuY() {
-        return ppuY;
-    }
-
-    public void setPpuY(float ppuY) {
-        this.ppuY = ppuY;
-    }
-
-    public int getScore() {
-        return score;
-    }
-
-    public void setScore(int score) {
-        this.score = score;
-    }
-
-    public int getLives() {
-        return lives;
-    }
-
-    public void setLives(int lives) {
-        this.lives = lives;
-    }
-
-    public String getScorePrint() {
-        return scorePrint;
-    }
-
-    public void setScorePrint(String scorePrint) {
-        this.scorePrint = scorePrint;
-    }
-
-    public int getCoin() {
-        return coin;
-    }
-
-    public void setCoin(int coin) {
-        this.coin = coin;
-    }
-
-    public String getCoinPrint() {
-        return coinPrint;
-    }
-
-    public void setCoinPrint(String coinPrint) {
-        this.coinPrint = coinPrint;
-    }
-
     private Array<Rectangle> mobArmy;
     private Array<Rectangle> laserBullets;
     private Array<Rectangle> healthupPacks;
     private long lastDropTime;
     private long lastBulletDropTime;
     private long bulletInterval = 500000000;
-    private Texture bulletImage;
+
+    public GameScreen(MainGame mainGame) {
+        this.mainGame = mainGame;
+    }
+
+    //сеттер для получения текстуры игрока
+    public void setPlayerTexture(Texture playerSkin) {
+        this.playerTexture  = playerSkin;
+    }
 
     //устанавка позиции камеры на сцене
-    public void SetCamera(float x, float y){
+    public void setCamera(float x, float y){
         this.camera.position.set(x, y,0);
         this.camera.update();
     }
@@ -275,17 +70,8 @@ public class GameScreen implements Screen, InputProcessor {
         exitMenuBtn = new Texture("button3.png");
         exitMenuBtnDown = new Texture("button4.png");
         livesTexture = new Texture("heart.png");
-        miniMobImage0 = new Texture(Gdx.files.internal("mob1 small.png"));
         mobImage0 = new Texture(Gdx.files.internal("mob1.png"));
-        bigMobImage0 = new Texture(Gdx.files.internal("mob1 big.png"));
-        miniMobImage1 = new Texture(Gdx.files.internal("mob2 small.png"));
-        mobImage1 = new Texture(Gdx.files.internal("mob2.png"));
         healthup = new Texture("healthup.png");
-        gun = new Texture("gun.png");
-        bigMobImage1 = new Texture(Gdx.files.internal("mob2 big.png"));
-        miniMobImage2 = new Texture(Gdx.files.internal("mob3 small.png"));
-        mobImage2 = new Texture(Gdx.files.internal("mob3.png"));
-        bigMobImage2 = new Texture(Gdx.files.internal("mob3 big.png"));
         if (bulletImage == null){
             bulletImage = new Texture(Gdx.files.internal("bullet.png"));
         }
@@ -369,29 +155,6 @@ public class GameScreen implements Screen, InputProcessor {
         }
     }
 
-    //создание экрана
-    @Override
-    public void show() {
-        mainGame.batch = new SpriteBatch();
-        Gdx.input.setInputProcessor(this);
-        camera = new OrthographicCamera();
-        camera.setToOrtho(false, 600, 800);
-        loadTextures();
-        loadMusic();
-        loadSound();
-        player = new Rectangle();
-        player.x = 600 / 2 - 64 / 2; // центрировать корабль по горизонтали
-        player.y = 20; // нижний левый угол корабля на 20 пикселей выше нижнего края экрана
-        player.width = 64;
-        player.height = 64;
-
-        mobArmy = new Array<Rectangle>();
-        spawnMobArmy();
-
-        laserBullets = new Array<Rectangle>();
-        healthupPacks = new Array<Rectangle>();
-    }
-
     private void spawnMobArmy()
     {
         Rectangle mob = new Rectangle();
@@ -425,6 +188,29 @@ public class GameScreen implements Screen, InputProcessor {
         lastDropTime = TimeUtils.nanoTime();
     }
 
+    //создание экрана
+    @Override
+    public void show() {
+        mainGame.batch = new SpriteBatch();
+        Gdx.input.setInputProcessor(this);
+        camera = new OrthographicCamera();
+        camera.setToOrtho(false, 600, 800);
+        loadTextures();
+        loadMusic();
+        loadSound();
+        player = new Rectangle();
+        player.x = 600 / 2 - 64 / 2; // центрировать корабль по горизонтали
+        player.y = 20; // нижний левый угол корабля на 20 пикселей выше нижнего края экрана
+        player.width = 64;
+        player.height = 64;
+
+        mobArmy = new Array<Rectangle>();
+        spawnMobArmy();
+
+        laserBullets = new Array<Rectangle>();
+        healthupPacks = new Array<Rectangle>();
+    }
+
     //отрисовка текстур
     @Override
     public void render(float delta) {
@@ -432,7 +218,7 @@ public class GameScreen implements Screen, InputProcessor {
         if(!isPaused){
             Gdx.gl.glClearColor(0, 0, 0.2f, 1);
             Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-            SetCamera(cameraWidth / 2, cameraHeight / 2f);
+            setCamera(cameraWidth / 2, cameraHeight / 2f);
             camera.update();
             mainGame.batch.setProjectionMatrix(camera.combined);
             mainGame.batch.begin();
@@ -514,8 +300,8 @@ public class GameScreen implements Screen, InputProcessor {
                     }
                 }
             }
-            mainGame.batch.end();
 
+            mainGame.batch.end();
         }else {
             //отрисовка экрана паузы
             mainGame.batch.begin();
@@ -605,12 +391,11 @@ public class GameScreen implements Screen, InputProcessor {
             lives -= 1;
             coin += 5;
         }
-        if(isPaused){
-            if((height-screenY)/ppuY >= 10 && (height-screenY)/ppuY <= 120 && screenX/ppuX>=0 && screenX/ppuX<=120) {
+        if((isPaused)&&((height-screenY)/ppuY >= 10 && (height-screenY)/ppuY <= 120 && screenX/ppuX>=0 && screenX/ppuX<=120)) {
                 buttonSound.play();
                 isExitMenuDown = true;
-            }
         }
+
         return true;
 
     }

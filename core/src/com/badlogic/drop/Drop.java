@@ -47,7 +47,6 @@ public class Drop extends ApplicationAdapter {
 	private Music gameMusic;
 	Ship ship;
 	Alien alien;
-	Rectangle shipSkin;
 	SpriteBatch batch;
 	public TextureRegion shipRegion;
 
@@ -110,6 +109,7 @@ public class Drop extends ApplicationAdapter {
 		aliens = new Array<Alien>();
 		spawnAlienDrop();
 	}
+
 	private void spawnAlienDrop()
 	{
 		if (aliens.size < 10) {
@@ -146,7 +146,7 @@ public class Drop extends ApplicationAdapter {
 			if (alien.ID == 3 || alien.ID == 6|| alien.ID == 9)
 			{
 				alien.position.x += 200 *Gdx.graphics.getDeltaTime();
-				alien.position.y -= 200 *Gdx.graphics.getDeltaTime();
+     			alien.position.y -= 200 *Gdx.graphics.getDeltaTime();
 			}
 			if(alien.position.y < -40) iter.remove();
 			if(alien.position.x < -600) iter.remove();

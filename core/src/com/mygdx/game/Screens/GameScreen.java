@@ -132,8 +132,6 @@ public class GameScreen implements Screen, InputProcessor {
     //при проигрыше все полученные значения передаются на нужные экраны
     public void defeat() {
         if (lives <= 0) {
-            //На данный момент экран поражения вызывается после
-            // трех нажатий на кнопку паузы на игровом экране
             mainGame.defeatScreen.setScore(score);
             mainGame.defeatScreen.setCoin(coin);
             mainGame.skinsScreen.setShopCoin(coin);
@@ -258,7 +256,6 @@ public class GameScreen implements Screen, InputProcessor {
                     explosionSound.play();
                     iter.remove();
                     lives -= 1;
-                    if (lives == 0) defeat();
                 }
 
                 for(Iterator<Rectangle> iter2 = laserBullets.iterator(); iter2.hasNext(); ){
@@ -300,7 +297,6 @@ public class GameScreen implements Screen, InputProcessor {
                     }
                 }
             }
-
             mainGame.batch.end();
         }else {
             //отрисовка экрана паузы
@@ -328,6 +324,7 @@ public class GameScreen implements Screen, InputProcessor {
         if(player.x > 600-64) { player.x = 600-64; }
 
         if(TimeUtils.nanoTime() - lastDropTime > 1000000000) spawnMobArmy();
+        defeat();
     }
 
     @Override
@@ -385,9 +382,6 @@ public class GameScreen implements Screen, InputProcessor {
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
         if ((height - screenY) / ppuY >= 750 && (height - screenY) / ppuY <= 796 && screenX / ppuX >= 560 && screenX / ppuX <= 596) {
             isPaused = !isPaused;
-            score += 10;
-            lives -= 1;
-            coin += 5;
         }
         if((isPaused)&&((height-screenY)/ppuY >= 10 && (height-screenY)/ppuY <= 120 && screenX/ppuX>=0 && screenX/ppuX<=120)) {
                 buttonSound.play();
@@ -402,7 +396,6 @@ public class GameScreen implements Screen, InputProcessor {
     public boolean touchUp(int screenX, int screenY, int pointer, int button) {
         if (!Gdx.app.getType().equals(Application.ApplicationType.Desktop))
             return false;
-        defeat();
         if(isPaused){
             if(isExitMenuDown){
                 dispose();

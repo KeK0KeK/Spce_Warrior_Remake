@@ -1,0 +1,3 @@
+Shop coin: 50
+Selected skin: 0
+Bought skins:  0

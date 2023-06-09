@@ -18,7 +18,7 @@ import java.util.Iterator;
 
 public class GameScreen implements Screen, InputProcessor {
     private Texture playerTexture, bg, gamePlayerSkin, exitMenuBtn, exitMenuBtnDown,
-            pauseTexture, playTexture, livesTexture, healthup, mobImage0, bulletImage;
+            pauseTexture, playTexture, livesTexture, healthup, mobImage, bulletImage;
     private Music buttonSound;
     private Sound killMobSound, explosionSound, laserSound, powerup;
     private boolean isExitMenuDown, isPaused;
@@ -70,8 +70,10 @@ public class GameScreen implements Screen, InputProcessor {
         exitMenuBtn = new Texture("button3.png");
         exitMenuBtnDown = new Texture("button4.png");
         livesTexture = new Texture("heart.png");
-        mobImage0 = new Texture(Gdx.files.internal("mob1.png"));
+        mobImage = new Texture(Gdx.files.internal("mob1.png"));
         healthup = new Texture("healthup.png");
+        pauseTexture = new Texture(Gdx.files.internal("pause.png"));
+        playTexture = new Texture(Gdx.files.internal("play.png"));
         if (bulletImage == null){
             bulletImage = new Texture(Gdx.files.internal("bullet.png"));
         }
@@ -79,8 +81,6 @@ public class GameScreen implements Screen, InputProcessor {
             playerTexture  = new Texture(Gdx.files.internal("alien1.png"));
         }
         gamePlayerSkin = playerTexture;
-        pauseTexture = new Texture(Gdx.files.internal("pause.png"));
-        playTexture = new Texture(Gdx.files.internal("play.png"));
     }
 
     private void loadSound(){
@@ -141,6 +141,7 @@ public class GameScreen implements Screen, InputProcessor {
         }
     }
 
+    //Отрисовка жизней
     public void drawLives() {
         if (lives >= 3) {
             mainGame.batch.draw(livesTexture, 90, 700);
@@ -153,6 +154,7 @@ public class GameScreen implements Screen, InputProcessor {
         }
     }
 
+    //Метод создания врагов
     private void spawnMobArmy()
     {
         Rectangle mob = new Rectangle();
@@ -164,6 +166,7 @@ public class GameScreen implements Screen, InputProcessor {
         lastDropTime = TimeUtils.nanoTime();
     }
 
+    //Метод создания плазменных выстрелов
     private void spawnBulletDrop()
     {
         Rectangle laserBullet = new Rectangle();
@@ -175,6 +178,7 @@ public class GameScreen implements Screen, InputProcessor {
         lastBulletDropTime = TimeUtils.nanoTime();
     }
 
+    //Метод создания ремонтных ящиков
     private void spawnHealthup(float x, float y)
     {
         Rectangle healthupPack = new Rectangle();
@@ -193,12 +197,14 @@ public class GameScreen implements Screen, InputProcessor {
         Gdx.input.setInputProcessor(this);
         camera = new OrthographicCamera();
         camera.setToOrtho(false, 600, 800);
+
         loadTextures();
         loadMusic();
         loadSound();
+
         player = new Rectangle();
-        player.x = 600 / 2 - 64 / 2; // центрировать корабль по горизонтали
-        player.y = 20; // нижний левый угол корабля на 20 пикселей выше нижнего края экрана
+        player.x = 600 / 2 - 64 / 2;
+        player.y = 20;
         player.width = 64;
         player.height = 64;
 
@@ -229,7 +235,7 @@ public class GameScreen implements Screen, InputProcessor {
 
             for(Rectangle mob: mobArmy)
             {
-                mainGame.batch.draw(mobImage0, mob.x, mob.y);
+                mainGame.batch.draw(mobImage, mob.x, mob.y);
             }
             for (Rectangle laserBullet: laserBullets)
             {
@@ -283,6 +289,7 @@ public class GameScreen implements Screen, InputProcessor {
 
             for (Iterator<Rectangle> iter = healthupPacks.iterator(); iter.hasNext();) {
                 Rectangle healthupPack = iter.next();
+                if (healthupPack.y + 25 < 0) iter.remove();
                 if (healthupPack.overlaps(player))
                 {
                     if(lives <=2 ){

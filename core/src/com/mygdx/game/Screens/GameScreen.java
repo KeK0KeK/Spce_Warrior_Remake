@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
@@ -15,15 +16,18 @@ import com.badlogic.gdx.utils.TimeUtils;
 import com.mygdx.game.MainGame;
 
 import java.util.Iterator;
+import java.util.Timer;
 
 public class GameScreen implements Screen, InputProcessor {
     private Texture playerTexture, bg, gamePlayerSkin, exitMenuBtn, exitMenuBtnDown,
-            pauseTexture, playTexture, livesTexture, healthup, mobImage, bulletImage;
+            pauseTexture, playTexture, livesTexture, healthup, mobImage, bulletImage, shieldUp, activeShield;
     private Music buttonSound;
-    private Sound killMobSound, explosionSound, laserSound, powerup;
+    private Sound killMobSound, explosionSound, laserSound, powerup, shieldOn, shieldOff;
     private boolean isExitMenuDown, isPaused;
     private final MainGame mainGame;
+    private ShapeRenderer shapeRenderer;
     private Rectangle player;
+    private Rectangle shipShield;
     private OrthographicCamera camera;
     private float cameraWidth = 600F;
     private float cameraHeight = 800F;
@@ -32,11 +36,14 @@ public class GameScreen implements Screen, InputProcessor {
     private int score = 0;
     private int coin = 0;
     private int lives = 3;
+    int shieldLives = 3;
+    private boolean activate = false;
     private int playerSpeed = 400;
     String scorePrint, coinPrint;
     private Array<Rectangle> mobArmy;
     private Array<Rectangle> laserBullets;
     private Array<Rectangle> healthupPacks;
+    private Array<Rectangle> shields;
     private long lastDropTime;
     private long lastBulletDropTime;
     private long bulletInterval = 500000000;
@@ -72,6 +79,8 @@ public class GameScreen implements Screen, InputProcessor {
         livesTexture = new Texture("heart.png");
         mobImage = new Texture(Gdx.files.internal("mob1.png"));
         healthup = new Texture("healthup.png");
+        shieldUp = new Texture("shield.png");
+        activeShield = new Texture("ship shield.png");
         pauseTexture = new Texture(Gdx.files.internal("pause.png"));
         playTexture = new Texture(Gdx.files.internal("play.png"));
         if (bulletImage == null){
@@ -88,6 +97,8 @@ public class GameScreen implements Screen, InputProcessor {
         killMobSound = Gdx.audio.newSound(Gdx.files.internal("kill mob 1.wav"));
         laserSound = Gdx.audio.newSound(Gdx.files.internal("piu-piu.ogg"));
         powerup = Gdx.audio.newSound(Gdx.files.internal("powerup.wav"));
+        shieldOn = Gdx.audio.newSound(Gdx.files.internal("shield On.mp3"));
+        shieldOff = Gdx.audio.newSound(Gdx.files.internal("shield Off.mp3"));
     }
 
     //прорисовка счета и монет
@@ -190,6 +201,17 @@ public class GameScreen implements Screen, InputProcessor {
         lastDropTime = TimeUtils.nanoTime();
     }
 
+    private void spawnShield(float x, float y)
+    {
+        Rectangle shield = new Rectangle();
+        shield.x = x;
+        shield.y = y;
+        shield.width = 25;
+        shield.height = 25;
+        shields.add(shield);
+        lastDropTime = TimeUtils.nanoTime();
+    }
+
     //создание экрана
     @Override
     public void show() {
@@ -197,6 +219,7 @@ public class GameScreen implements Screen, InputProcessor {
         Gdx.input.setInputProcessor(this);
         camera = new OrthographicCamera();
         camera.setToOrtho(false, 600, 800);
+        shapeRenderer = new ShapeRenderer();
 
         loadTextures();
         loadMusic();
@@ -208,11 +231,18 @@ public class GameScreen implements Screen, InputProcessor {
         player.width = 64;
         player.height = 64;
 
+        shipShield = new Rectangle();
+        shipShield.x = player.x - 34;
+        shipShield.y = player.y;
+        shipShield.width = 120;
+        shipShield.height = 120;
+
         mobArmy = new Array<Rectangle>();
         spawnMobArmy();
 
         laserBullets = new Array<Rectangle>();
         healthupPacks = new Array<Rectangle>();
+        shields = new Array<Rectangle>();
     }
 
     //отрисовка текстур
@@ -233,6 +263,11 @@ public class GameScreen implements Screen, InputProcessor {
             drawCoinInGame();
             drawLives();
 
+            if (activate)
+            {
+                mainGame.batch.draw(activeShield, player.x - 34, player. y);
+            }
+
             for(Rectangle mob: mobArmy)
             {
                 mainGame.batch.draw(mobImage, mob.x, mob.y);
@@ -246,6 +281,11 @@ public class GameScreen implements Screen, InputProcessor {
                 mainGame.batch.draw(healthup, healthupPack.x, healthupPack.y);
                 healthupPack.y -= 350 * Gdx.graphics.getDeltaTime();
             }
+            for (Rectangle shield: shields)
+            {
+                mainGame.batch.draw(shieldUp, shield.x, shield.y);
+                shield.y -= 350 * Gdx.graphics.getDeltaTime();
+            }
 
             for(Iterator<Rectangle> iter = mobArmy.iterator(); iter.hasNext(); )
             {
@@ -253,6 +293,7 @@ public class GameScreen implements Screen, InputProcessor {
                 if (score >= 250)
                 {
                     mob.y -= 370 * Gdx.graphics.getDeltaTime();
+
                 } else{
                     mob.y -= 200 * Gdx.graphics.getDeltaTime();
                 }
@@ -263,13 +304,28 @@ public class GameScreen implements Screen, InputProcessor {
                     iter.remove();
                     lives -= 1;
                 }
+                if (activate)
+                {
+                    if(mob.overlaps(shipShield))
+                    {
+                        explosionSound.play();
+                        iter.remove();
+                        shieldLives -= 1;
+                    }
+                }
+                if (shieldLives == 0) {
+                    activate = false;
+                    shieldOff.play();
+                    shieldLives = 3;
+                }
 
                 for(Iterator<Rectangle> iter2 = laserBullets.iterator(); iter2.hasNext(); ){
                     Rectangle laserBullet = iter2.next();
                     if (mob.overlaps(laserBullet)){
                         if (Intersector.overlaps(mob, laserBullet))
                         {
-                            if (Math.random()< 0.3) spawnHealthup(mob.x + mob.width / 2, mob.y + mob.height / 2);
+                            //if ( Math.random() > 0.2 && Math.random()< 0.3) spawnHealthup(mob.x + mob.width / 2, mob.y + mob.height / 2);
+                            if (Math.random()< 0.9) spawnShield(mob.x + mob.width, mob.y + mob.height);
                         }
                         killMobSound.play();
                         iter.remove();
@@ -304,6 +360,23 @@ public class GameScreen implements Screen, InputProcessor {
                     }
                 }
             }
+
+            for (Iterator<Rectangle> iter = shields.iterator(); iter.hasNext();) {
+                Rectangle shield = iter.next();
+                if (shield.y + 25 < 0) iter.remove();
+                if (shield.overlaps(player))
+                {
+                    if (activate)
+                    {
+                        powerup.play();
+                        iter.remove();
+                    }else{
+                        shieldOn.play();
+                        activate = true;
+                        iter.remove();
+                    }
+                }
+            }
             mainGame.batch.end();
         }else {
             //отрисовка экрана паузы
@@ -316,8 +389,16 @@ public class GameScreen implements Screen, InputProcessor {
             mainGame.batch.end();
             isPaused = true;
         }
-        if(Gdx.input.isKeyPressed(Input.Keys.A)) { player.x -= deltaTime*playerSpeed; }
-        if(Gdx.input.isKeyPressed(Input.Keys.D)) { player.x += deltaTime*playerSpeed; }
+        if(Gdx.input.isKeyPressed(Input.Keys.A))
+        {
+            player.x -= deltaTime*playerSpeed;
+            shipShield.x -= deltaTime*playerSpeed;
+        }
+        if(Gdx.input.isKeyPressed(Input.Keys.D))
+        {
+            player.x += deltaTime*playerSpeed;
+            shipShield.x += deltaTime*playerSpeed;
+        }
         if (TimeUtils.nanoTime() - lastBulletDropTime > bulletInterval)
         {
             if(Gdx.input.isKeyPressed(Input.Keys.SPACE))

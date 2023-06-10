@@ -5,34 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7a4d822e-f8d7-4a17-a5cf-0ae689f8c84a" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/assets/shop.txt" beforeDir="false" afterPath="$PROJECT_DIR$/assets/shop.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/build/classes/java/main/com/mygdx/game/Actors/Actor.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/build/classes/java/main/com/mygdx/game/Actors/Player.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/build/classes/java/main/com/mygdx/game/GraphicsObjects/GraphicsObjects.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/build/classes/java/main/com/mygdx/game/MainGame.class" beforeDir="false" afterPath="$PROJECT_DIR$/core/build/classes/java/main/com/mygdx/game/MainGame.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/build/classes/java/main/com/mygdx/game/Screens/DefeatScreen.class" beforeDir="false" afterPath="$PROJECT_DIR$/core/build/classes/java/main/com/mygdx/game/Screens/DefeatScreen.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/build/classes/java/main/com/mygdx/game/Screens/GameScreen.class" beforeDir="false" afterPath="$PROJECT_DIR$/core/build/classes/java/main/com/mygdx/game/Screens/GameScreen.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/build/classes/java/main/com/mygdx/game/Screens/MainMenuScreen.class" beforeDir="false" afterPath="$PROJECT_DIR$/core/build/classes/java/main/com/mygdx/game/Screens/MainMenuScreen.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/build/classes/java/main/com/mygdx/game/Screens/MenuScreen.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/build/classes/java/main/com/mygdx/game/Screens/PauseScreen.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/build/classes/java/main/com/mygdx/game/Screens/RecordsScreen.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/build/classes/java/main/com/mygdx/game/Screens/SkinsScreen.class" beforeDir="false" afterPath="$PROJECT_DIR$/core/build/classes/java/main/com/mygdx/game/Screens/SkinsScreen.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/build/classes/java/main/com/mygdx/game/Tools/Circle.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/build/classes/java/main/com/mygdx/game/Tools/Point2D.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/build/libs/core-1.0.jar" beforeDir="false" afterPath="$PROJECT_DIR$/core/build/libs/core-1.0.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/build/tmp/compileJava/previous-compilation-data.bin" beforeDir="false" afterPath="$PROJECT_DIR$/core/build/tmp/compileJava/previous-compilation-data.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/core/src/com/mygdx/game/Screens/GameScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/com/mygdx/game/Screens/GameScreen.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/desktop/build/resources/main/badlogic.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/desktop/build/resources/main/bucket.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/desktop/build/resources/main/button_down.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/desktop/build/resources/main/button_up.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/desktop/build/resources/main/drop.wav" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/desktop/build/resources/main/droplet.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/desktop/build/resources/main/hs_err_pid18448.log" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/desktop/build/resources/main/player spaceship0.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/desktop/build/resources/main/rain.mp3" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/desktop/build/resources/main/theme.mp3" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/desktop/build/tmp/compileJava/previous-compilation-data.bin" beforeDir="false" afterPath="$PROJECT_DIR$/desktop/build/tmp/compileJava/previous-compilation-data.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/desktop/src/com/badlogic/drop/DesktopLauncher.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -44,6 +20,18 @@
       <ProjectState />
     </projectState>
   </component>
+  <component name="ExternalProjectsManager">
+    <system id="GRADLE">
+      <state>
+        <projects_view>
+          <tree_state>
+            <expand />
+            <select />
+          </tree_state>
+        </projects_view>
+      </state>
+    </system>
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
@@ -51,6 +39,7 @@
     <option name="stateVersion" value="1" />
   </component>
   <component name="ProjectId" id="2Qw9dR2ckVp128q5yyAQThmbBfI" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -66,6 +55,19 @@
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;
   }
 }</component>
+  <component name="RunManager">
+    <configuration default="true" type="JetRunConfigurationType">
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
+      <option name="filePath" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -79,6 +81,7 @@
       <workItem from="1686338822141" duration="269000" />
       <workItem from="1686339290941" duration="1004000" />
       <workItem from="1686340699517" duration="7979000" />
+      <workItem from="1686391592113" duration="1780000" />
     </task>
     <servers />
   </component>

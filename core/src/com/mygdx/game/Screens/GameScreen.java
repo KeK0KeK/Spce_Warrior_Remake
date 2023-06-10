@@ -290,18 +290,26 @@ public class GameScreen implements Screen, InputProcessor {
             for(Iterator<Rectangle> iter = mobArmy.iterator(); iter.hasNext(); )
             {
                 Rectangle mob = iter.next();
-                if (score >= 250)
+                if (score >= 480)
                 {
                     mob.y -= 370 * Gdx.graphics.getDeltaTime();
+                    if(TimeUtils.nanoTime() - lastDropTime > 500000000) spawnMobArmy();
 
                 } else{
                     mob.y -= 200 * Gdx.graphics.getDeltaTime();
+                    if(TimeUtils.nanoTime() - lastDropTime > 1000000000) spawnMobArmy();
                 }
-                if(mob.y + 32 < 0) iter.remove();
+                if(mob.y + 32 < 0) {
+                    if(mobArmy.contains(mob, true)){
+                        mobArmy.removeValue(mob, true);
+                    }
+                }
                 if(mob.overlaps(player))
                 {
                     explosionSound.play();
-                    iter.remove();
+                    if(mobArmy.contains(mob, true)){
+                        mobArmy.removeValue(mob, true);
+                    }
                     lives -= 1;
                 }
                 if (activate)
@@ -309,7 +317,9 @@ public class GameScreen implements Screen, InputProcessor {
                     if(mob.overlaps(shipShield))
                     {
                         explosionSound.play();
-                        iter.remove();
+                        if(mobArmy.contains(mob, true)){
+                            mobArmy.removeValue(mob, true);
+                        }
                         shieldLives -= 1;
                     }
                 }
@@ -328,8 +338,12 @@ public class GameScreen implements Screen, InputProcessor {
                             if (Math.random()< 0.1) spawnShield(mob.x + mob.width, mob.y + mob.height);
                         }
                         killMobSound.play();
-                        iter.remove();
-                        iter2.remove();
+                        if(mobArmy.contains(mob, true)){
+                            mobArmy.removeValue(mob, true);
+                        }
+                        if(laserBullets.contains(laserBullet, true)){
+                            laserBullets.removeValue(laserBullet, true);
+                        }
                         score += 20;
                         coin += 2;
 
@@ -340,36 +354,54 @@ public class GameScreen implements Screen, InputProcessor {
             for (Iterator<Rectangle> iter = laserBullets.iterator(); iter.hasNext(); ){
                 Rectangle laserBullet = iter.next();
                 laserBullet.y += 600 * Gdx.graphics.getDeltaTime();
-                if(laserBullet.y + 64 > 900) iter.remove();
+                if(laserBullet.y + 64 > 900) {
+                    if(laserBullets.contains(laserBullet, true)){
+                        laserBullets.removeValue(laserBullet, true);
+                    }
+                }
             }
 
             for (Iterator<Rectangle> iter = healthupPacks.iterator(); iter.hasNext();) {
                 Rectangle healthupPack = iter.next();
-                if (healthupPack.y + 25 < 0) iter.remove();
+                if (healthupPack.y + 25 < 0) {
+                    if(healthupPacks.contains(healthupPack, true)){
+                        healthupPacks.removeValue(healthupPack, true);
+                    }
+                }
                 if (healthupPack.overlaps(player))
                 {
                     if(lives <=2 ){
                         lives += 1;
                         powerup.play();
-                        iter.remove();
+                        if(healthupPacks.contains(healthupPack, true)){
+                            healthupPacks.removeValue(healthupPack, true);
+                        }
                     }
                     if (lives>=3)
                     {
                         powerup.play();
-                        iter.remove();
+                        if(healthupPacks.contains(healthupPack, true)){
+                            healthupPacks.removeValue(healthupPack, true);
+                        }
                     }
                 }
             }
 
             for (Iterator<Rectangle> iter = shields.iterator(); iter.hasNext();) {
                 Rectangle shield = iter.next();
-                if (shield.y + 25 < 0) iter.remove();
+                if (shield.y + 25 < 0) {
+                    if(shields.contains(shield, true)){
+                        shields.removeValue(shield, true);
+                    }
+                }
                 if (shield.overlaps(player))
                 {
                     if (activate)
                     {
                         powerup.play();
-                        iter.remove();
+                        if(shields.contains(shield, true)){
+                            shields.removeValue(shield, true);
+                        }
                     }else{
                         shieldOn.play();
                         activate = true;
@@ -410,8 +442,6 @@ public class GameScreen implements Screen, InputProcessor {
 
         if(player.x < 0) { player.x = 0; }
         if(player.x > 600-64) { player.x = 600-64; }
-
-        if(TimeUtils.nanoTime() - lastDropTime > 1000000000) spawnMobArmy();
         defeat();
     }
 

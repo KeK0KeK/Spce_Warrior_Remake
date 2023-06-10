@@ -324,8 +324,8 @@ public class GameScreen implements Screen, InputProcessor {
                     if (mob.overlaps(laserBullet)){
                         if (Intersector.overlaps(mob, laserBullet))
                         {
-                            //if ( Math.random() > 0.2 && Math.random()< 0.3) spawnHealthup(mob.x + mob.width / 2, mob.y + mob.height / 2);
-                            if (Math.random()< 0.9) spawnShield(mob.x + mob.width, mob.y + mob.height);
+                            if ( Math.random() > 0.2 && Math.random()< 0.3) spawnHealthup(mob.x + mob.width / 2, mob.y + mob.height / 2);
+                            if (Math.random()< 0.1) spawnShield(mob.x + mob.width, mob.y + mob.height);
                         }
                         killMobSound.play();
                         iter.remove();
